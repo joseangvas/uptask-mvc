@@ -39,8 +39,10 @@ class LoginController {
   }
 
 
-  public static function olvide() {
-    echo "Desde Olvide";
+  public static function olvide(Router $router) {
+    session_start();
+    $alertas = [];
+
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
