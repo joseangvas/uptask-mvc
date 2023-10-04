@@ -1,10 +1,10 @@
-<div class="contenedor login">
+<div class="contenedor olvide">
   <?php include_once __DIR__ . '/../templates/nombre-sitio.php'; ?>
 
   <div class="contenedor-sm">
-    <p class="descripcion-pagina">Iniciar Sesión</p>
+    <p class="descripcion-pagina">Recupera tu Acceso UpTask</p>
 
-    <form action="/" class="formulario" method=""POST>
+    <form action="/olvide" class="formulario" method="POST">
       <div class="campo">
         <label for="email">Email</label>
         <input
