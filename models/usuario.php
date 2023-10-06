@@ -55,7 +55,7 @@ class Usuario extends ActiveRecord {
 
   //* Generar un Token
   public function crearToken() {
-    $this->token = uniqid();
+    $this->token = uniqid();  // = md5(uniqid()): más avanzado BD + grandes
   }
 
 }

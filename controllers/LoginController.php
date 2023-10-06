@@ -48,8 +48,13 @@ class LoginController {
           // Eliminar password2
           unset($usuario->password2);
 
-          // Generar el Token
+          // Generar el Token Unico
           $usuario->crearToken();
+
+          // Enviar el Email de Confirmación
+          $email = new Email($usuario->nombre, $usuario->email, $usuario->token);
+
+          $email->enviarConfirmacion();
 
           // Crear un Nuevo Usuario
           $resultado = $usuario->guardar();
@@ -85,6 +90,7 @@ class LoginController {
   }
 
 
+  //* REESTABLER EL PASSWORD CUANDO ES OLVIDADO POR EL USUARIO
   public static function reestablecer(Router $router) {
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
