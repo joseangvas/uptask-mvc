@@ -1,5 +1,5 @@
 {
-    "name": "juandelatorre/up-task_mvc",
+    "name": "joseangvas/up-task_mvc",
     "description": "Proyecto UpTask MVC, PHP 8, SASS",
     "type": "project",
     "autoload": {
@@ -7,7 +7,10 @@
             "MVC\\": "./",
             "Controllers\\": "./controllers",
             "Model\\": "./models",
-            "Classes": "./Classes"
+            "Classes\\": "./classes"
         }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
     }
 }
