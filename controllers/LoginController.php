@@ -78,15 +78,38 @@ class LoginController {
 
   //*****  CUANDO EL USUARIO OLVIDO SU PASSWORD  ******//
   public static function olvide(Router $router) {
-
+    $alertas = [];
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $usuario = new Usuario($_POST);
+      $alertas = $usuario->validarEmail();
 
+      if(empty($alertas)) {
+        // Buscar el Usuario
+        $usuario = Usuario::where('email', $usuario->email);
+
+        if($usuario && $usuario->confirmado) {
+          // Se ha Encontrado el Usuario
+          // Generar el Token para Restablecer Contraseña
+          
+          // Actualizar el Usuario
+
+          // Enviar el Email
+
+          // Imprimir la Alerta
+
+        } else {
+          // No se encuentra Registrado el Usuario
+          Usuario::setAlerta('error', 'El Usuario No Existe o No está Confirmado');
+          $alertas = Usuario::getAlertas();
+        }
+      }
     }
 
     // Muestra la Vista
     $router->render('auth/olvide', [
-      'titulo' => 'Olvidé mi Password'
+      'titulo' => 'Olvidé mi Password',
+      'alertas' => $alertas
     ]);
   }
 

@@ -89,6 +89,7 @@ class Email {
 
       // Enviar el Email
       $mail->send();
+      
       // echo 'El Email ha sido Enviado';
     } catch (Exception $e) {
       echo 'El Email No pudo ser Enviado. ' . $mail->ErrorInfo;
