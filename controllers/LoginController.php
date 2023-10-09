@@ -99,6 +99,8 @@ class LoginController {
           $usuario->guardar();
 
           // Enviar el Email
+          $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+          $email->enviarInstrucciones();
 
           // Imprimir la Alerta
           Usuario::setAlerta('exito', 'Hemos Enviado las Instrucciones a tu Email');
@@ -106,10 +108,11 @@ class LoginController {
         } else {
           // No se encuentra Registrado el Usuario
           Usuario::setAlerta('error', 'El Usuario No Existe o No está Confirmado');
-          $alertas = Usuario::getAlertas();
         }
       }
     }
+
+    $alertas = Usuario::getAlertas();
 
     // Muestra la Vista
     $router->render('auth/olvide', [
@@ -121,14 +124,52 @@ class LoginController {
 
   //* REESTABLER EL PASSWORD CUANDO ES OLVIDADO POR EL USUARIO
   public static function reestablecer(Router $router) {
-    
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $token = s($_GET['token']);
+    $mostrar = true;
 
+    if(!$token) header('Location: /');
+
+    // Identificar el Usuario con este Token
+    $usuario = Usuario::where('token', $token);
+    
+    if(empty($usuario)) {
+      Usuario::setAlerta('error', 'Token No Válido');
+      $mostrar = false;
     }
+    
+    unset($usuario->password2);
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Añadir el Nuevo Password
+      $usuario->sincronizar($_POST);
+
+      // Validar el Password
+      $alertas = $usuario->validarPassword();
+
+      if(empty($alertas)) {
+        // Hashear el password
+        $usuario->hashPassword();
+        
+        // Eliminar token de usuario
+        $usuario->token = null;
+
+        // Guardar Datos del Usuario en la BD
+        $resultado = $usuario->guardar();
+
+        // Redireccionar
+        if($resultado) {
+          header('Location: /');
+        }
+      }
+    }
+
+    $alertas = Usuario::getAlertas();
 
     // Muestra la Vista
     $router->render('auth/reestablecer', [
-      'titulo' => 'Reestablecer Contraseña'
+      'titulo' => 'Reestablecer Contraseña',
+      'alertas' => $alertas,
+      'mostrar' => $mostrar
     ]);
   }
 

@@ -78,13 +78,12 @@ class Email {
       $mail->CharSet = 'UTF-8';
 
       // Cuerpo del Email
-      $nombreUsuario = $this->nombre . " " . $this->apellido;
-
-      $contenido = "<html>";
-        $contenido .= "<p><strong>Hola " . $nombreUsuario . "</strong> Has Solicitado Reestablecer tu Password. Reestablecelo Presionando el Siguiente Enlace:</p>";
-        $contenido .= "<p>Presiona aquí: <a href='" . 'http://localhost:3000' . "/recuperar?token=" . $this->token . "'>Reestablecer Password</a></p>";
+       $contenido = "<html>";
+        $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has Solicitado Reestablecer tu Password. Reestablecelo Presionando el Siguiente Enlace:</p>";
+        $contenido .= "<p>Presiona aquí: <a href='" . 'http://localhost:3000' . "/reestablecer?token=" . $this->token . "'>Reestablecer Password</a></p>";
         $contenido .= "<p>Si tu no solicitaste este Cambio, puedes ignorar este mensaje.</p>";
       $contenido .= "</html>";
+      
       $mail->Body = $contenido;
 
       // Enviar el Email
