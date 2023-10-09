@@ -89,14 +89,19 @@ class LoginController {
         $usuario = Usuario::where('email', $usuario->email);
 
         if($usuario && $usuario->confirmado) {
+          unset($usuario->password2);
+
           // Se ha Encontrado el Usuario
           // Generar el Token para Restablecer Contraseña
-          
+          $usuario->crearToken();
+
           // Actualizar el Usuario
+          $usuario->guardar();
 
           // Enviar el Email
 
           // Imprimir la Alerta
+          Usuario::setAlerta('exito', 'Hemos Enviado las Instrucciones a tu Email');
 
         } else {
           // No se encuentra Registrado el Usuario
