@@ -156,7 +156,7 @@ class LoginController {
         // Guardar Datos del Usuario en la BD
         $resultado = $usuario->guardar();
 
-        // Redireccionar
+        // Redireccionar al Usuario
         if($resultado) {
           header('Location: /');
         }

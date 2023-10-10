@@ -31,7 +31,7 @@ class Email {
 
       // Configurar el Email Remitente y Destinatario
       $mail->setFrom('cuentas@uptask.com');     // Email de AppSalon
-      $mail->addAddress('cuentas@uptask.com', 'uptask.com');  // Email del Cliente
+      $mail->addAddress('cuentas@uptask.com');  // Email del Cliente
       $mail->Subject = 'Confirma tu Cuenta';
 
       // Set HTML
@@ -40,7 +40,7 @@ class Email {
 
       // Cuerpo del Email
       $contenido = "<html>";
-        $contenido .= "<p><strong>Hola " . $this.nombre . "</strong> Has Creado tu Cuenta en UpTask. Solo debes confirmarla Presionando el Siguiente Enlace:</p>";
+        $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has Creado tu Cuenta en UpTask. Solo debes confirmarla Presionando el Siguiente Enlace:</p>";
         $contenido .= "<p>Presiona aquí: <a href='" . "http://localhost:3000/confirmar" . "?token=" . $this->token . "'>Confirmar Cuenta</a></p>";
         $contenido .= "<p>Si No Creaste esta Cuenta, puedes ignorar este mensaje.</p>";
       $contenido .= "</html>";
