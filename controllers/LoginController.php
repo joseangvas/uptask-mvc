@@ -7,15 +7,42 @@ use Model\Usuario;
 use MVC\Router;
 
 class LoginController {
+  // Iniciar la Sesión del Usuario
   public static function login(Router $router) {
     $alertas = [];
  
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $auth = new Usuario($_POST);
+      $usuario = new Usuario($_POST);
 
-      $alertas = $auth->validarLogin();
+      $alertas = $usuario->validarLogin();
 
+      if(empty($alertas)) {
+        // Verificar que el Usuario existe
+        $usuario = Usuario::where('email', $usuario->email);
+        unset($usuario->password2);
+
+        if(!$usuario || !$usuario->confirmado) {
+          Usuario::setAlerta('error', 'El Usuario No Existe o No Está Confirmado');
+        } else {
+          // El Usuario Si Existe
+          if(password_verify($_POST['password'], $usuario->password)) {
+            // Iniciar la Sesión del Usuario
+            session_start();
+            $_SESSION['id'] = $usuario->id;
+            $_SESSION['nombre'] = $usuario->nombre;
+            $_SESSION['email'] = $usuario->email;
+            $_SESSION['login'] = true;
+
+            // Redireccionar
+            header('Location: /dashboard');
+          } else {
+            Usuario::setAlerta('error', 'Password Incorrecto');
+          }
+        }
+      }
     }
+
+    $alertas = Usuario::getAlertas();
 
     // Render a la Vista
     $router->render('auth/login', [
@@ -25,11 +52,12 @@ class LoginController {
   }
 
 
+  //* Salir de la Aplicación
   public static function logout() {
     echo "Desde Logout";
 
-
   }
+
 
   //* CREAR USUARIO EN UPTASK
   public static function crear(Router $router) {
