@@ -54,8 +54,13 @@ class LoginController {
 
   //* Salir de la Aplicación
   public static function logout() {
-    echo "Desde Logout";
+    // Cargar la Sesión
+    session_start();
+    // Cerrar Sesión Limpiando el Arreglo de Sesión
+    $_SESSION = [];
 
+    // Redireccionar al Usuario
+    header('Location: /');
   }
 
 
