@@ -62,11 +62,18 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
-    // Busqueda Where por Columna (Campo)
+    // Busqueda Where por Columna (Campo) y Valor
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
+    }
+
+    // Busca todos los Registros Cuya Columna (Campo) tiene el mismo Valor
+    public static function belongsto($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
     }
 
     // SQL para Consultas Avanzadas.
