@@ -17,6 +17,7 @@ class DashboardController {
   }
 
 
+  //* Crear Proyectos
   public static function crear_proyecto(Router $router) {
     session_start();
     isAuth();
@@ -51,6 +52,27 @@ class DashboardController {
   }
 
 
+  //* Editar Proyectos
+  public static function proyecto(Router $router) {
+    session_start();
+    isAuth();
+
+    $token = $_GET['id'];
+
+    if(!$token) header('Location: /dashboard');
+
+    // Revisar que el Usuario es el Creador del Proyecto
+
+
+    // debuguear($_SESSION);
+
+    $router->render('dashboard/proyecto', [
+      'titulo' => 'Nombre del Proyecto'
+    ]);
+  }
+
+
+  //* Editar Perfil de Usuario
   public static function perfil(Router $router) {
     session_start();
     isAuth();
