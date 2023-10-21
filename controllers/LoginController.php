@@ -240,6 +240,7 @@ class LoginController {
       // Guardar en la Base de Datos
       $usuario->guardar();
 
+      // Mostrar Alerta de Exito de Comprobación de Cuenta
       Usuario::setAlerta('exito', 'Cuenta Comprobada Correctamente');
     }
 

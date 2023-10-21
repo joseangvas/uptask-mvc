@@ -18,6 +18,7 @@ class Proyecto extends ActiveRecord {
     $this->propietarioId = $args['propietarioId'] ?? '';
   }
 
+  //* Validar el Ingreso del Nombre del Proyecto
   public function validarProyecto() {
     if(!$this->proyecto) {
       self::$alertas['error'][] = 'El Nombre del Proyecto es Obligatorio';
