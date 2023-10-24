@@ -7,26 +7,33 @@ class ActiveRecord {
     protected static $tabla = '';
     protected static $columnasDB = [];
 
+    
     // Alertas y Mensajes
     protected static $alertas = [];
     
+
     // Definir la conexión a la BD - includes/database.php
     public static function setDB($database) {
         self::$db = $database;
     }
 
+
     public static function setAlerta($tipo, $mensaje) {
         static::$alertas[$tipo][] = $mensaje;
     }
+
+
     // Validación
     public static function getAlertas() {
         return static::$alertas;
     }
 
+
     public function validar() {
         static::$alertas = [];
         return static::$alertas;
     }
+
 
     // Registros - CRUD
     public function guardar() {
@@ -42,11 +49,13 @@ class ActiveRecord {
         return $resultado;
     }
 
+
     public static function all() {
         $query = "SELECT * FROM " . static::$tabla;
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
 
     // Busca un registro por su id
     public static function find($id) {
@@ -55,12 +64,14 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+
     // Obtener Registro
     public static function get($limite) {
         $query = "SELECT * FROM " . static::$tabla . " LIMIT ${limite}";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
+
 
     // Busqueda Where por Columna (Campo) y Valor
     public static function where($columna, $valor) {
@@ -69,6 +80,7 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+
     // Busca todos los Registros Cuya Columna (Campo) tiene el mismo Valor
     public static function belongsto($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
@@ -76,12 +88,14 @@ class ActiveRecord {
         return $resultado;
     }
 
+
     // SQL para Consultas Avanzadas.
     public static function SQL($consulta) {
         $query = $consulta;
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
 
     // crea un nuevo registro
     public function crear() {
@@ -104,6 +118,7 @@ class ActiveRecord {
         ];
     }
 
+
     public function actualizar() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
@@ -123,12 +138,14 @@ class ActiveRecord {
         return $resultado;
     }
 
+
     // Eliminar un registro - Toma el ID de Active Record
     public function eliminar() {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $resultado = self::$db->query($query);
         return $resultado;
     }
+
 
     public static function consultarSQL($query) {
         // Consultar la base de datos
@@ -147,6 +164,7 @@ class ActiveRecord {
         return $array;
     }
 
+
     protected static function crearObjeto($registro) {
         $objeto = new static;
 
@@ -161,6 +179,7 @@ class ActiveRecord {
 
 
 
+
     // Identificar y unir los atributos de la BD
     public function atributos() {
         $atributos = [];
@@ -172,6 +191,7 @@ class ActiveRecord {
         return $atributos;
     }
 
+
     public function sanitizarAtributos() {
         $atributos = $this->atributos();
         $sanitizado = [];
@@ -181,6 +201,7 @@ class ActiveRecord {
         
         return $sanitizado;
     }
+
 
     public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {

@@ -11,6 +11,7 @@ class Proyecto extends ActiveRecord {
   public $url;
   public $propietarioId;
   
+  //* Función Constructora de la Tabla
   public function __construct($args = []) {
     $this->id = $args['id'] ?? null;
     $this->proyecto = $args['proyecto'] ?? '';
