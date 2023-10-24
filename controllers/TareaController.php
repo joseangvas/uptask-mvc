@@ -8,6 +8,21 @@ use Model\Tarea;
 
 class TareaController {
   public static function index() {
+    // debuguear($_GET);  Solo para Probar la url.
+    $proyectoId = $_GET['id'];
+    
+    if(!$proyectoId) header('Location: /dashboard');
+    
+    $proyecto = Proyecto::where('url', $proyectoId);
+
+    session_start();
+
+    if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) header('Location: /404');
+
+    $tareas = Tarea::belongsto('proyectoId', $proyecto->id);
+
+    echo json_encode(['tareas' => $tareas]);
+
 
   }
 
