@@ -20,7 +20,7 @@ class DashboardController {
   }
 
 
-  //* Crear Proyectos
+  //* Crear Proyectos a Realizar
   public static function crear_proyecto(Router $router) {
     session_start();
     isAuth();
