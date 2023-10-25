@@ -22,8 +22,6 @@ class TareaController {
     $tareas = Tarea::belongsto('proyectoId', $proyecto->id);
 
     echo json_encode(['tareas' => $tareas]);
-
-
   }
 
 
