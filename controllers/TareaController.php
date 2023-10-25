@@ -33,6 +33,7 @@ class TareaController {
       $proyectoId = $_POST['proyectoId'];
       $proyecto = Proyecto::where('url', $proyectoId);
 
+      // Validar si los Datos de la Tarea son Válidos
       if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
         $respuesta = [
           'tipo' => 'error',
