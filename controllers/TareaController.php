@@ -102,7 +102,32 @@ class TareaController {
   public static function eliminar() {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      
+      // Validar que el Proyecto Exista
+      $proyecto = Proyecto::where('url', $_POST['proyectoId']);
+
+      session_start();
+
+      // Validar si los Datos de la Tarea son Válidos
+      if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
+        $respuesta = [
+          'tipo' => 'error',
+          'mensaje' => 'Hubo un Error al Actualizar la Tarea'
+        ];
+
+        echo json_encode($respuesta);
+        return;
+      }
+
+      $tarea = new Tarea($_POST);  // Instanciar la Tarea
+      $resultado = $tarea->eliminar();
+
+      $resultado = [
+        'resultado' => $resultado,
+        'mensaje' => 'Tarea Eliminada Correctamente',
+        'tipo' => 'exito'
+      ];
+
+      echo json_encode($resultado);
     }
   }
 }
