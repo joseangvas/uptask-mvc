@@ -14,6 +14,7 @@ class Router {
         $this->postRoutes[$url] = $fn;
     }
 
+    //* Comprobar Rutas de EndPoint
     public function comprobarRutas() {
 
         $currentUrl = $_SERVER['PATH_INFO'] ?? '/';
@@ -34,6 +35,7 @@ class Router {
         }
     }
 
+    //* Renderizar la ruta
     public function render($view, $datos = []) {
 
         // Leer lo que le pasamos  a la vista

@@ -7,6 +7,7 @@ use Model\Tarea;
 
 
 class TareaController {
+  //* Mostrar las Tareas de un Proyecto
   public static function index() {
     // debuguear($_GET);  Solo para Probar la url.
     $proyectoId = $_GET['id'];
@@ -25,6 +26,7 @@ class TareaController {
   }
 
 
+  //* Crear una Tarea
   public static function crear() {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,6 +62,7 @@ class TareaController {
   }
 
 
+  //* Actualizar la Tarea Editada
   public static function actualizar() {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -99,6 +102,7 @@ class TareaController {
   }
 
 
+  //* Eliminar la Tarea Elegida
   public static function eliminar() {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
