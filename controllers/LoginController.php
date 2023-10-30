@@ -7,7 +7,7 @@ use Model\Usuario;
 use MVC\Router;
 
 class LoginController {
-  // Iniciar la Sesión del Usuario
+  //* Iniciar la Sesión del Usuario
   public static function login(Router $router) {
     $alertas = [];
  
@@ -211,6 +211,7 @@ class LoginController {
   }
 
 
+  //* Enviar Mensaje a la Pantalla
   public static function mensaje(Router $router) {
     
     $router->render('auth/mensaje', [
@@ -219,6 +220,7 @@ class LoginController {
   }
 
 
+  //* Confirmar el Ingreso de una Cuenta
   public static function confirmar(Router $router) {
 
     $token = s($_GET['token']);
