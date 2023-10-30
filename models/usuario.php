@@ -13,6 +13,7 @@ class Usuario extends ActiveRecord {
   public $token;
   public $confirmado;
 
+  //* Función Constructora de los Datos de la Tabla
   public function __construct($args = []) {
     $this->id = $args['id'] ?? null;
     $this->nombre = $args['nombre'] ?? '';
