@@ -25,6 +25,7 @@ class DashboardController {
   public static function crear_proyecto(Router $router) {
     session_start();
     isAuth();
+
     $alertas = [];
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -93,20 +94,55 @@ class DashboardController {
       $alertas = $usuario->validar_perfil();
 
       if(empty($alertas)) {
-        // Guardar los Datos del Usuario
-        $usuario->guardar();
+        // Verificar que el Email Ingresado No pertenece a otro Usuario Registrado
+        $existeUsuario = Usuario::where('email', $usuario->email);
 
-        Usuario::setAlerta('exito', 'Guardado Correctamente');
-        $alertas = $usuario->getAlertas();
-
-        // Asignar el Nombre Nuevo a la Barra Superior
-        $_SESSION['nombre'] = $usuario->nombre;
+        if($existeUsuario && $existeUsuario->id !== $usuario->id) {
+          // Mostrar Mensaje de Error de Email Repetido
+          Usuario::setAlerta('error', 'Ya Existe Usuario con este Email');
+          $alertas = $usuario->getAlertas();
+        } else {
+          // Guardar los Datos del Usuario
+          $usuario->guardar();
+  
+          Usuario::setAlerta('exito', 'Guardado Correctamente');
+          $alertas = $usuario->getAlertas();
+  
+          // Asignar el Nombre Nuevo a la Barra Superior
+          $_SESSION['nombre'] = $usuario->nombre;
+        };
       }
     }
     
     $router->render('dashboard/perfil', [
-      'titulo' => 'Perfil',
+      'titulo' => 'Mi Perfil',
       'usuario' => $usuario,
+      'alertas' => $alertas
+    ]);
+  }
+
+
+  public static function cambiar_password(Router $router) {
+    session_start();
+    isAuth();
+
+    $alertas = [];
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $usuario = Usuario::find($_SESSION['id']);
+
+      // Sincronizar con los Datos del Usuario
+      $usuario->sincronizar($_POST);
+      $alertas = $usuario->nuevo_password();
+
+      if(empty($alertas)) {
+        // Guardar los Datos del Usuario
+
+      }
+    };
+
+    $router->render('dashboard/cambiar-password', [
+      'titulo' => 'Cambiar Password',
       'alertas' => $alertas
     ]);
   }
