@@ -11,6 +11,7 @@ class Email {
   protected $nombre;
   protected $token;
 
+  //* Función Constructora del Arreglo de Datos de la Tabla
   public function __construct($email, $nombre, $token) {
     $this->email = $email;
     $this->nombre = $nombre;
@@ -18,6 +19,7 @@ class Email {
   }
 
 
+  //* Enviar Confirmación al Correo del Usuario para Validar Cambiar Password
   public function enviarConfirmacion() {
     try {
       // Crear el Objeto de Email
@@ -30,7 +32,7 @@ class Email {
       $mail->Password = '996cf78b53e82f';
 
       // Configurar el Email Remitente y Destinatario
-      $mail->setFrom('cuentas@uptask.com');     // Email de AppSalon
+      $mail->setFrom('cuentas@uptask.com');     // Email de UpTask
       $mail->addAddress('cuentas@uptask.com');  // Email del Cliente
       $mail->Subject = 'Confirma tu Cuenta';
 
@@ -57,6 +59,7 @@ class Email {
   }
 
 
+  //* Enviar Instrucciones al Correo del Usuario para Confirmación
   public function enviarInstrucciones() {
     try {
       // Crear el Objeto de Email
