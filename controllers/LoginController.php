@@ -159,7 +159,7 @@ class LoginController {
   }
 
 
-  //* REESTABLER EL PASSWORD CUANDO ES OLVIDADO POR EL USUARIO
+  //* REESTABLECER EL PASSWORD CUANDO ES OLVIDADO POR EL USUARIO
   public static function reestablecer(Router $router) {
     $token = s($_GET['token']);
     $mostrar = true;

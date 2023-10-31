@@ -122,6 +122,7 @@ class DashboardController {
   }
 
 
+  //* Cambiar el Password del Usuario
   public static function cambiar_password(Router $router) {
     session_start();
     isAuth();
@@ -137,7 +138,30 @@ class DashboardController {
 
       if(empty($alertas)) {
         // Guardar los Datos del Usuario
+        $resultado = $usuario->comprobar_password();
 
+        if($resultado) {
+          // Asignar el Nuevo Password
+          $usuario->password = $usuario->password_nuevo;
+
+          // Eliminar Propiedades No Necesarias
+          unset($usuario->password_actual);
+          unset($usuario->password_nuevo);
+
+          // Hashear el Nuevo Password
+          $usuario->hashPassword();
+
+          // Guardar los Datos del Usuario
+          $resultado = $usuario->guardar();
+
+          if($resultado) {
+            Usuario::setAlerta('exito', 'Password Guardado Correctamente');
+            $alertas = $usuario->getAlertas();
+          }
+        } else {
+          Usuario::setAlerta('error', 'Password Incorrecto');
+          $alertas = $usuario->getAlertas();
+        }
       }
     };
 

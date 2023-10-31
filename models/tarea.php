@@ -12,6 +12,7 @@ class Tarea extends ActiveRecord {
   public $estado;
   public $proyectoId;
 
+  //* Función Constructora del Objeto
   public function __construct($args = []) {
 
     $this->id = $args['id'] ?? null;

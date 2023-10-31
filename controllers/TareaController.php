@@ -102,7 +102,7 @@ class TareaController {
   }
 
 
-  //* Eliminar la Tarea Elegida
+  //* Eliminar la Tarea Seleccionada
   public static function eliminar() {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {

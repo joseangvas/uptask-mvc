@@ -30,7 +30,7 @@ class Usuario extends ActiveRecord {
 
 
   //* Validar el Login de Usuarios
-  public function validarLogin() {
+  public function validarLogin() : array {
     if(!$this->email) {
       self::$alertas['error'][] = 'El Email del Usuario es Obligatorio';
     }
@@ -48,7 +48,7 @@ class Usuario extends ActiveRecord {
 
 
   //* Validación para Cuentas Nuevas
-  public function validarNuevaCuenta() {
+  public function validarNuevaCuenta() : array {
     if(!$this->nombre) {
       self::$alertas['error'][] = 'El Nombre del Usuario es Obligatorio';
     }
@@ -73,7 +73,7 @@ class Usuario extends ActiveRecord {
   }
 
   //* Valida un Email
-  public function validarEmail() {
+  public function validarEmail() : array {
     if(!$this->email) {
       self::$alertas['error'][] = 'El Email es Obligatorio';
     }
@@ -86,7 +86,7 @@ class Usuario extends ActiveRecord {
   }
 
   //* Validar el Password
-  public function validarPassword() {
+  public function validarPassword() : array {
     if(!$this->password) {
       self::$alertas['error'][] = 'El Password No puede ir Vacío';
     }
@@ -99,7 +99,7 @@ class Usuario extends ActiveRecord {
   }
 
 
-  public function validar_perfil() {
+  public function validar_perfil() : array {
     if(!$this->nombre) {
       self::$alertas['error'][] = 'El Nombre es Obligatorio';
     }
@@ -111,7 +111,7 @@ class Usuario extends ActiveRecord {
   }
 
 
-  public function nuevo_password() {
+  public function nuevo_password() : array {
     if(!$this->password_actual) {
       self::$alertas['error'][] = 'El Password Actual No puede ir Vacío';
     }
@@ -127,15 +127,20 @@ class Usuario extends ActiveRecord {
     return self::$alertas;
   }
 
+  // Comprobar el Pasword
+  public function comprobar_password() : bool {
+    return password_verify($this->password_actual, $this->password);
+  }
+
 
   //* Hashear el Password
-  public function hashPassword() {
+  public function hashPassword() : void {
     $this->password = password_hash($this->password, PASSWORD_BCRYPT);
   }
 
 
   //* Generar un Token
-  public function crearToken() {
+  public function crearToken() : void {
     $this->token = uniqid();  // = md5(uniqid()): más avanzado BD + grandes
   }
 }
